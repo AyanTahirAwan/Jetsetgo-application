@@ -1,0 +1,65 @@
+import mysql.connector
+
+crud={
+    "airlines":{  "fields":["airlines_ID",
+                            "airlines_Name",
+                            "country"],
+                     "search_columns":["airlines_ID","name","country"],
+                     "primary_key":"airlines_ID",
+                     "foreign_key":{} },
+  
+    "airports":{      "fields":["airport_ID",
+                                "name",
+                                "city",
+                                "country"],
+                      "search_columns":["airport_ID","name","city","country"],
+                      "primary_key":"airport_ID",
+                      "foreign_key":{}},
+    
+    "aircrafts": {"fields":["aircraft_ID",
+                            "model",
+                            "country",
+                            "capacity",
+                            "airlines_ID"],
+                          
+                      "search_columns":["aircraft_ID","model","country","capacity","airlines_ID"],
+                      "primary_key":"aircraft_ID",
+                      "foreign_key":{"airlines_ID":("airlines","airlines_ID","name")}},
+    
+    "flights":{"fields":[ "flight_ID",
+                        "airlines_ID",
+                        "departure_airport_ID",
+                        "arrival_airport_ID",
+                        "departure_time",
+                        "arrival_time",],
+                "search_columns":["flight_ID","departure_airport_ID","arrival_airport_ID","arrival_time","departure_time","airlines_ID"],
+                      "primary_key":"flight_ID",
+                      "foreign_key":{"departure_airport_ID":("airports","airport_ID","name"),
+                                     "arrival_airport_ID":("airports","airport_ID","name"),
+                                     "airlines_ID":("airlines","airlines_ID","name")}}, 
+    
+    "bookings":{"fields":["booking_ID",
+                        "passenger_ID" ,
+                        "flight_ID" ,
+                        "bookings_Date" ,
+                        "Status"],
+                    "search_columns":["booking_ID","passenger_ID","flight_ID","bookings_Date","Status","passenger_ID","flight_ID"],
+                      "primary_key":"booking_ID",
+                      "foreign_key":{"passenger_ID":("passengers","passenger_ID","Name"),
+                                     "flight_ID":("flights","flight_ID","flight_ID")}},
+ 
+    "passengers":{"fields":["passenger_ID",
+                           "Name",
+                           "Age",
+                           "Gender"],
+                        "search_columns":["passenger_ID","Name","Age","Gender"],
+                      "primary_key":"passenger_ID",
+                      "foreign_key":{}},
+  
+   "users":{"fields":[       "user_ID",
+                            "username",
+                            "password_hash",
+                            "email",
+                            "is_admin",
+                            "created_at" ]}
+}
